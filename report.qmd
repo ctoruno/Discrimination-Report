@@ -1,0 +1,141 @@
+---
+title:        "Freedom and Institutions in Latin America and the Caribbean"
+subtitle:     "_Different perspectives torwards different realities_"
+author:       "_Carlos A. Toruño Paniagua_"
+format:       html
+server:       shiny
+bibliography: references.bib
+title-block-banner: "#264653"
+title-block-banner-color: "white"
+---
+
+```{r}
+#| output: false
+#| echo:   false
+
+source("R/settings.R")
+
+```
+
+Latin America and the Caribbean is known for being the most unequal region in the world. As portrayed by [this report](https://publications.iadb.org/en/the-inequality-crisis-latin-america-and-the-caribbean-at-the-crossroads) published by the Inter-American Development Bank, the region is characterized by a very high inequality in the income distribution and a fractured social contract. In the previous years, there has been a debate around how much does the high inequality in social and economic grounds that prevails in the region influence democratic and institutional aspects in the region [see @krishna_inequality_2008].
+
+In this report, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+## Perceptions of Discrimination
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur:
+
+::: {.panel-tabset}
+## 2022 Overview
+
+```{r}
+selectInput(inputId  = "inputP1a", 
+            label    = h5("Select a variable:"), 
+            choices  = list("Income"      = "q18a", 
+                            "Gender"      = "q18b",
+                            "Age"         = "EXP_q17j",
+                            "Ethnicity"   = "q18c",
+                            "Nationality" = "q18e",
+                            "Skin Color"  = "EXP_q17g",
+                            "Indigineous Origins" = "EXP_q17h", 
+                            "Sexual Orientation"  = "q18f"), 
+            selected = "EXP_q17g")
+plotOutput("discrimination_overview",
+           height = "750px")
+```
+
+
+## Across Time Comparison
+
+```{r}
+#| panel: input
+#| layout-ncol: 3
+
+selectInput(inputId  = "inputP2a", 
+            label    = h5("Select a variable:"), 
+            choices  = list("Income"      = "q18a", 
+                            "Gender"      = "q18b",
+                            "Ethnicity"   = "q18c",
+                            "Nationality" = "q18e",
+                            "Sexual Orientation"  = "q18f"), 
+            selected = "q18b")
+selectInput(inputId  = "inputP2b", 
+            label    = h5("Country A:"), 
+            choices  = unique(discrimination.ls[["Overview"]] %>% pull(country)), 
+            selected = "LAC avg")
+selectInput(inputId  = "inputP2c", 
+            label    = h5("Country B:"), 
+            choices  = unique(discrimination.ls[["Overview"]] %>% pull(country)), 
+            selected = "Nicaragua")
+
+```
+
+```{r}
+plotOutput("discrimination_comparison",
+           height = "550px")
+
+```
+:::
+
+```{r}
+#| context: server
+
+source("R/settings.R")
+
+output$discrimination_overview <- renderPlot({
+  discrimination.ls[["Overview"]] %>%
+    filter(year == 2022) %>%
+    select(country, all_of(input$inputP1a)) %>%
+    rename(target  = 2) %>%
+    mutate(color = if_else(country == "LAC avg",
+                           "Regional",
+                           "Country")) %>%
+    ggplot(aes(x    = reorder(country, target),
+               y    = target,
+               fill = color)) +
+    geom_bar(stat   = "identity",
+             show.legend = F) +
+    labs(title    = "Perceptions of Police Bias in Latin America and the Caribbean",
+         subtitle = "Percentage of people who thinks that a person ...",
+         y        = "% of Respondents") +
+    scale_fill_manual(values = c("Regional" = "#3B341F",
+                                 "Country"  = "#A5CBC3")) +
+    scale_y_continuous(limits = c(0,100),
+                       breaks = seq(0, 100, 20)) +
+    coord_flip() +
+    WJP_theme() +
+    theme(panel.grid.major.y = element_blank(),
+          axis.title.y       = element_blank())
+})
+
+output$discrimination_comparison <- renderPlot({
+  discrimination.ls[["Overview"]] %>%
+    filter(country %in% c(input$inputP2b, input$inputP2c)) %>%
+    select(country, year, all_of(input$inputP2a)) %>%
+    rename(target  = 3) %>%
+    mutate(color = if_else(country == input$inputP2b,
+                           "Country A",
+                           "Country B")) %>%
+    ggplot(aes(x     = year,
+               y     = target,
+               color = country)) +
+    geom_line(size = 2) +
+    labs(title    = "Perceptions of Police Bias in Latin America and the Caribbean",
+         subtitle = "Percentage of people who thinks that a person ...",
+         y        = "% of Respondents") +
+    scale_fill_manual(values = c( "#264653", "#F4A261")) +
+    scale_y_continuous(limits = c(0,100),
+                       breaks = seq(0, 100, 20)) +
+    scale_x_continuous(limits = c(2012, 2022),
+                       breaks = seq(2012, 2022, 2),
+                       labels = as.character(seq(2012, 2022, 2))) +
+    WJP_theme() +
+    theme(panel.grid.major.x = element_blank(),
+          axis.title.x       = element_blank(),
+          legend.position    = "top",
+          legend.key         = element_rect(fill = "white"))
+    
+
+})
+```
+
