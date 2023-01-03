@@ -52,7 +52,7 @@ if (Sys.info()["user"] == "carlostorunopaniagua") {
 ## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 discrimination.ls <- list(
-  "Overview"      = read_csv("Data/discrimination1.csv"),
+  "Overview"      = readRDS("Data/discrimination1.rds"),
   "Disaggregated" = read_csv("Data/discrimination2.csv") 
 )
 

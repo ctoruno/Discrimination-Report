@@ -1,0 +1,7 @@
+- source: report.qmd
+  netlify:
+    - id: 789c881a-6d2b-4b25-8f8d-63f1fd1acdb4
+      url: 'https://bespoke-rugelach-f21e23.netlify.app'
+  quarto-pub:
+    - id: 00e0f55f-25d3-440e-8ac7-b4f6d803d4c3
+      url: 'https://quartopub.com/sites/ctoruno/freedom-and-institutions-in-latin-america-and-the-caribbean'
