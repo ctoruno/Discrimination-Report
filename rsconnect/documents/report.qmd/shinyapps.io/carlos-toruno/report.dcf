@@ -1,0 +1,16 @@
+name: report
+title: report
+username:
+account: carlos-toruno
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 7966878
+bundleId: 6694697
+url: https://carlos-toruno.shinyapps.io/report/
+when: 1672784226.25386
+lastSyncTime: 1672784226.25387
+quarto_version: 1.2.269
+quarto_engines: knitr
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: Data/discrimination1.rds

@@ -2,18 +2,32 @@
 title:        "Freedom and Institutions in Latin America and the Caribbean"
 subtitle:     "_Different perspectives torwards different realities_"
 author:       "_Carlos A. Toruño Paniagua_"
-format:       html
 server:       shiny
 bibliography: references.bib
+format:       
+  html:
+    toc:       true
+    toc-depth: 2
 title-block-banner: "#264653"
 title-block-banner-color: "white"
 ---
 
 ```{r}
-#| output: false
-#| echo:   false
+#| context: setup
+#| include: false
 
 source("R/settings.R")
+
+```
+
+```{r}
+#| context: data 
+#| include: false
+
+discrimination.ls <- list(
+  "Overview"      = read_csv("Data/discrimination1.csv"),
+  "Disaggregated" = read_csv("Data/discrimination2.csv") 
+)
 
 ```
 
@@ -25,7 +39,7 @@ In this report, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur:
 
-::: {.panel-tabset}
+::: panel-tabset
 ## 2022 Overview
 
 ```{r}
@@ -40,10 +54,9 @@ selectInput(inputId  = "inputP1a",
                             "Indigineous Origins" = "EXP_q17h", 
                             "Sexual Orientation"  = "q18f"), 
             selected = "EXP_q17g")
-plotOutput("discrimination_overview",
+plotOutput("discrimination_fig1",
            height = "750px")
 ```
-
 
 ## Across Time Comparison
 
@@ -51,7 +64,15 @@ plotOutput("discrimination_overview",
 #| panel: input
 #| layout-ncol: 3
 
-selectInput(inputId  = "inputP2a", 
+selectInput(inputId  = "inputP1b", 
+            label    = h5("Country A:"), 
+            choices  = unique(discrimination.ls[["Overview"]] %>% pull(country)), 
+            selected = "LAC avg")
+selectInput(inputId  = "inputP1c", 
+            label    = h5("Country B:"), 
+            choices  = unique(discrimination.ls[["Overview"]] %>% pull(country)), 
+            selected = "Nicaragua")
+selectInput(inputId  = "inputP1d", 
             label    = h5("Select a variable:"), 
             choices  = list("Income"      = "q18a", 
                             "Gender"      = "q18b",
@@ -59,30 +80,65 @@ selectInput(inputId  = "inputP2a",
                             "Nationality" = "q18e",
                             "Sexual Orientation"  = "q18f"), 
             selected = "q18b")
-selectInput(inputId  = "inputP2b", 
-            label    = h5("Country A:"), 
-            choices  = unique(discrimination.ls[["Overview"]] %>% pull(country)), 
-            selected = "LAC avg")
-selectInput(inputId  = "inputP2c", 
-            label    = h5("Country B:"), 
-            choices  = unique(discrimination.ls[["Overview"]] %>% pull(country)), 
-            selected = "Nicaragua")
-
 ```
 
 ```{r}
-plotOutput("discrimination_comparison",
+plotOutput("discrimination_fig2",
            height = "550px")
 
 ```
 :::
 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+```{r}
+selectInput(inputId  = "inputP2a", 
+            label    = h5("Select a variable:"), 
+            choices  = list("Income"      = "inancia", 
+                            "Gender"      = "ale",
+                            "Skin Color"  = "kin"), 
+            selected = "kin")
+plotOutput("discrimination_fig3",
+           height = "750px")
+```
+
 ```{r}
 #| context: server
 
-source("R/settings.R")
+## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+##
+#                SERVER - DISCRIMINATION                                                                 ----
+##
+## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-output$discrimination_overview <- renderPlot({
+## Figure 1
+output$discrimination_fig1 <- renderPlot({
+  
+  if (input$inputP1a == "EXP_q17g") {
+    charac = "person with dark skin."
+  }
+  if (input$inputP1a == "q18a") {
+    charac = "person with low incomes."
+  }
+  if (input$inputP1a == "q18b") {
+    charac = "woman."
+  }
+  if (input$inputP1a == "EXP_q17j") {
+    charac = "young person."
+  }
+  if (input$inputP1a == "q18c") {
+    charac = "person of a different ethnicity."
+  }
+  if (input$inputP1a == "q18e") {
+    charac = "foregeiner or immigrant."
+  }
+  if (input$inputP1a == "EXP_q17h") {
+    charac = "a person with indigineous origins."
+  }
+  if (input$inputP1a == "q18f") {
+    charac = "a member of the LGBT community."
+  }
+  
   discrimination.ls[["Overview"]] %>%
     filter(year == 2022) %>%
     select(country, all_of(input$inputP1a)) %>%
@@ -96,8 +152,10 @@ output$discrimination_overview <- renderPlot({
     geom_bar(stat   = "identity",
              show.legend = F) +
     labs(title    = "Perceptions of Police Bias in Latin America and the Caribbean",
-         subtitle = "Percentage of people who thinks that a person ...",
-         y        = "% of Respondents") +
+         subtitle = paste("Percentage of people who believe that the local police would be negatively biased",
+                          "\ntowards a", charac),
+         y        = "% of Respondents",
+         caption  = "**Source**: General Population Poll 2021-2022") +
     scale_fill_manual(values = c("Regional" = "#3B341F",
                                  "Country"  = "#A5CBC3")) +
     scale_y_continuous(limits = c(0,100),
@@ -108,22 +166,44 @@ output$discrimination_overview <- renderPlot({
           axis.title.y       = element_blank())
 })
 
-output$discrimination_comparison <- renderPlot({
+## Figure 2
+output$discrimination_fig2 <- renderPlot({
+
+  if (input$inputP1d == "q18a") {
+    charac = "person with low incomes."
+  }
+  if (input$inputP1d == "q18b") {
+    charac = "woman."
+  }
+  if (input$inputP1d == "q18c") {
+    charac = "person of a different ethnicity."
+  }
+  if (input$inputP1d == "q18e") {
+    charac = "foregeiner or immigrant."
+  }
+  if (input$inputP1d == "q18f") {
+    charac = "a member of the LGBT community."
+  }
+  
   discrimination.ls[["Overview"]] %>%
-    filter(country %in% c(input$inputP2b, input$inputP2c)) %>%
-    select(country, year, all_of(input$inputP2a)) %>%
+    filter(country %in% c(input$inputP1b, input$inputP1c)) %>%
+    select(country, year, all_of(input$inputP1d)) %>%
     rename(target  = 3) %>%
-    mutate(color = if_else(country == input$inputP2b,
+    mutate(color = if_else(country == input$inputP1b,
                            "Country A",
                            "Country B")) %>%
     ggplot(aes(x     = year,
                y     = target,
                color = country)) +
-    geom_line(size = 2) +
+    geom_point(size  = 2.25) +
+    geom_line(size   = 1.25) +
     labs(title    = "Perceptions of Police Bias in Latin America and the Caribbean",
-         subtitle = "Percentage of people who thinks that a person ...",
-         y        = "% of Respondents") +
-    scale_fill_manual(values = c( "#264653", "#F4A261")) +
+         subtitle = paste("Percentage of people who believe that the local police would be negatively biased",
+                          "\ntowards a", charac),
+         y        = "% of Respondents",
+         caption  = paste0("**Source**: General Population Poll 2021-2022<br>",
+                           "**Note**: Time series are not available for perceptions based on skin color, age and indigineous origins.")) +
+    scale_color_manual(values = c( "#264653", "#F4A261")) +
     scale_y_continuous(limits = c(0,100),
                        breaks = seq(0, 100, 20)) +
     scale_x_continuous(limits = c(2012, 2022),
@@ -134,8 +214,39 @@ output$discrimination_comparison <- renderPlot({
           axis.title.x       = element_blank(),
           legend.position    = "top",
           legend.key         = element_rect(fill = "white"))
-    
-
 })
+
+## Figure 3
+output$discrimination_fig3 <- renderPlot({
+  discrimination.ls[["Disaggregated"]] %>%
+    filter(str_detect(category, 
+                      input$inputP2a)) %>%
+    ggplot(aes(color = category,
+               x     = reorder(country, mean),
+               y     = mean)) +
+    geom_point(size = 2) +
+    geom_segment(aes(x    = country,
+                     xend = country,
+                     y    = lower,
+                     yend = upper),
+                 alpha    = 0.7,
+                 show.legend = F) +
+    labs(title    = "Difference in Perceptions between Sociodemographic Groups",
+         subtitle = "Percentage of respondents that...",
+         y        = "% of Respondents",
+         caption  = paste0("**Source**: General Population Poll 2021-2022<br>",
+                           "**Note**: Disaggregation are only possible between genders, income and skin color")) +
+    scale_color_manual(values = c("#70161E",
+                                  "#596F62")) +
+    coord_flip() +
+    WJP_theme() +
+    theme(axis.title.y    = element_blank(),
+          legend.key      = element_rect(fill = "white"),
+          legend.position = "top")
+})
+
 ```
 
+## Criminal Justice Actors
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.

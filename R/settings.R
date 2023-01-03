@@ -19,6 +19,7 @@
 # Required libraries
 library(haven)
 library(shiny)
+library(ggtext)
 library(shinyWidgets)
 library(showtext)
 library(tidyverse)
@@ -26,39 +27,7 @@ library(tidyverse)
 
 ## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ##
-#                2.  SharePoint Path                                                                     ----
-##
-## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-# SharePoint path
-if (Sys.info()["user"] == "carlostorunopaniagua") {
-  path2SP <- paste0("/Users/carlostorunopaniagua/OneDrive - World Justice Project/Data Analytics/")
-  
-} else if (Sys.info()["user"] == "santiagopardo") {
-  path2SP <- paste0("/Users/santiagopardo/OneDrive - World Justice Project/Data Analytics/")
-  
-} else if (Sys.info()["user"] == "jaeheelee"){
-  path2SP <- paste0("/Users/jaeheelee/Library/CloudStorage/OneDrive-SharedLibraries-WorldJusticeProject/",
-                    "Research - Data Analytics/")
-  
-} else{
-  path2SP <- "PLEASE INSERT YOUR PERSONAL PATH TO THE  WJP - DATA ANALYTICS DIRECTORY"
-}
-
-## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-##
-#                3.  Data Loading                                                                        ----
-##
-## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-discrimination.ls <- list(
-  "Overview"      = readRDS("Data/discrimination1.rds"),
-  "Disaggregated" = read_csv("Data/discrimination2.csv") 
-)
-
-## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-##
-#                4.  Fonts & ggplo Theme                                                                 ----
+#                3.  Fonts & ggplot Theme                                                                ----
 ##
 ## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -69,7 +38,7 @@ showtext_auto()
 # Defining a ggplot WJP theme
 WJP_theme <- function() {
   theme(legend.title = element_blank(),
-        legend.text  = element_text(size   = 12,
+        legend.text  = element_text(size   = 14,
                                     family = "Lato",
                                     face   = "bold",
                                     margin = margin(10, 0, 10, 0)),
@@ -81,21 +50,21 @@ WJP_theme <- function() {
         panel.grid.minor   = element_blank(),
         axis.title.y       = element_text(family   = "Lato",
                                           face     = "bold",
-                                          size     = 13,
+                                          size     = 14,
                                           color    = "black",
                                           margin   = margin(0, 10, 0, 0)),
         axis.title.x       = element_text(family   = "Lato",
                                           face     = "bold",
-                                          size     = 13,
+                                          size     = 14,
                                           color    = "black",
                                           margin   = margin(10, 0, 0, 0)),
         axis.text.y        = element_text(family   = "Lato",
                                           face     = "plain",
-                                          size     = 11,
+                                          size     = 13,
                                           color    = "black"),
         axis.text.x = element_text(family = "Lato",
                                    face   = "plain",
-                                   size   = 11,
+                                   size   = 13,
                                    color  = "black"),
         axis.ticks  = element_blank(),
         plot.title  = element_text(family = "Lato",
@@ -106,14 +75,14 @@ WJP_theme <- function() {
         plot.title.position = "plot",
         plot.subtitle = element_text(family = "Lato",
                                      face   = "italic",
-                                     size   = 16,
+                                     size   = 17,
                                      color  = "black",
                                      margin = margin(10, 0, 15,0)),
-        plot.caption = element_text(family  = "Lato",
-                                    face    = "italic",
-                                    size    = 11,
-                                    color   = "black",
-                                    margin  = margin(10, 0, 10,0)),
+        plot.caption = element_markdown(family  = "Lato",
+                                        face    = "italic",
+                                        size    = 14,
+                                        color   = "black",
+                                        margin  = margin(15, 0, 5,0)),
         plot.margin  = unit(c(2.5, 7.5, 7.5, 2.5), "mm")
   ) 
 }
