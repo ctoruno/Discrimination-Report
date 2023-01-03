@@ -218,6 +218,17 @@ output$discrimination_fig2 <- renderPlot({
 
 ## Figure 3
 output$discrimination_fig3 <- renderPlot({
+  
+  if (input$inputP2a == "inancia") {
+    charac = "person with low incomes."
+  }
+  if (input$inputP2a == "ale") {
+    charac = "woman."
+  }
+  if (input$inputP2a == "kin") {
+    charac = "person of dark skin."
+  }
+  
   discrimination.ls[["Disaggregated"]] %>%
     filter(str_detect(category, 
                       input$inputP2a)) %>%
@@ -232,10 +243,11 @@ output$discrimination_fig3 <- renderPlot({
                  alpha    = 0.7,
                  show.legend = F) +
     labs(title    = "Difference in Perceptions between Sociodemographic Groups",
-         subtitle = "Percentage of respondents that...",
+         subtitle = paste("Percentage of people who believe that the local police would be negatively biased",
+                          "\ntowards a", charac),
          y        = "% of Respondents",
          caption  = paste0("**Source**: General Population Poll 2021-2022<br>",
-                           "**Note**: Disaggregation are only possible between genders, income and skin color")) +
+                           "**Note**: Disaggregations are only possible between genders, income and skin color")) +
     scale_color_manual(values = c("#70161E",
                                   "#596F62")) +
     coord_flip() +
