@@ -10,6 +10,28 @@
 ##
 ## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+# Required libraries
+library(haven)
+library(tidyverse)
+
+# SharePoint path
+if (Sys.info()["user"] == "carlostorunopaniagua") {
+  path2SP <- paste0("/Users/carlostorunopaniagua/OneDrive - World Justice Project/Data Analytics/")
+  
+} else if (Sys.info()["user"] == "santiagopardo") {
+  path2SP <- paste0("/Users/santiagopardo/OneDrive - World Justice Project/Data Analytics/")
+  
+} else if (Sys.info()["user"] == "jaeheelee"){
+  path2SP <- paste0("/Users/jaeheelee/Library/CloudStorage/OneDrive-SharedLibraries-WorldJusticeProject/",
+                    "Research - Data Analytics/")
+  
+} else if (Sys.info()["user"] == "macbookprosolido") {
+  path2SP <- paste0("/Users/macbookprosolido/Documents/WJP/")
+} else{
+  path2SP <- "PLEASE INSERT YOUR PERSONAL PATH TO THE  WJP - DATA ANALYTICS DIRECTORY"
+}
+
+# Loading data
 master_data.df <- read_dta(paste0(path2SP,
                                   "Data/GPP/LAC - Merged.dta"))
 
@@ -108,4 +130,9 @@ discrimination2.df <- map_dfr(c("inc", "gend", "skin"),
 write_csv(discrimination1.df, "Data/discrimination1.csv")
 write_csv(discrimination2.df, "Data/discrimination2.csv")
 
+## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+##
+#                2.  Criminal Justice Actors Data                                                        ----
+##
+## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

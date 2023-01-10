@@ -98,7 +98,7 @@ selectInput(inputId  = "inputP2a",
                             "Gender"      = "ale",
                             "Skin Color"  = "kin"), 
             selected = "kin")
-plotOutput("discrimination_fig3",
+plotlyOutput("discrimination_fig3",
            height = "750px")
 ```
 
@@ -217,7 +217,7 @@ output$discrimination_fig2 <- renderPlot({
 })
 
 ## Figure 3
-output$discrimination_fig3 <- renderPlot({
+output$discrimination_fig3 <- renderPlotly({
   
   if (input$inputP2a == "inancia") {
     charac = "person with low incomes."
@@ -229,32 +229,57 @@ output$discrimination_fig3 <- renderPlot({
     charac = "person of dark skin."
   }
   
-  discrimination.ls[["Disaggregated"]] %>%
-    filter(str_detect(category, 
-                      input$inputP2a)) %>%
-    ggplot(aes(color = category,
-               x     = reorder(country, mean),
-               y     = mean)) +
-    geom_point(size = 2) +
-    geom_segment(aes(x    = country,
-                     xend = country,
-                     y    = lower,
-                     yend = upper),
-                 alpha    = 0.7,
-                 show.legend = F) +
-    labs(title    = "Difference in Perceptions between Sociodemographic Groups",
-         subtitle = paste("Percentage of people who believe that the local police would be negatively biased",
-                          "\ntowards a", charac),
-         y        = "% of Respondents",
-         caption  = paste0("**Source**: General Population Poll 2021-2022<br>",
-                           "**Note**: Disaggregations are only possible between genders, income and skin color")) +
-    scale_color_manual(values = c("#70161E",
-                                  "#596F62")) +
-    coord_flip() +
-    WJP_theme() +
-    theme(axis.title.y    = element_blank(),
-          legend.key      = element_rect(fill = "white"),
-          legend.position = "top")
+  ggplotly(
+    discrimination.ls[["Disaggregated"]] %>%
+      filter(str_detect(category, 
+                        input$inputP2a)) %>%
+      ggplot(aes(color = category,
+                 x     = reorder(country, mean),
+                 y     = mean,
+                 text  = paste0("Percentage: ", 
+                                format(round(mean, 0), 
+                                       nsmall = 0), 
+                                "%"))) +
+      geom_point(size = 2) +
+      geom_segment(aes(x    = country,
+                       xend = country,
+                       y    = lower,
+                       yend = upper),
+                   alpha    = 0.7,
+                   show.legend = F) +
+      labs(y        = "% of Respondents",
+           caption  = paste0("**Source**: General Population Poll 2021-2022<br>",
+                             "**Note**: Disaggregations are only possible between genders, income and skin color")) +
+      scale_color_manual(values = c("#70161E",
+                                    "#596F62")) +
+      coord_flip() +
+      WJP_theme() +
+      theme(axis.title.y    = element_blank(),
+            axis.title.x    = element_text(size  = 9),
+            axis.text.x     = element_text(size  = 8),
+            axis.text.y     = element_text(size  = 8,
+                                           hjust = 0),
+            plot.title      = element_text(size  = 13),
+            legend.text     = element_text(size  = 8), 
+            legend.key      = element_rect(fill  = "white"),
+            legend.position = "bottom",
+            legend.title    = element_blank()),
+    tooltip = c("text")
+  ) %>%
+    layout(title  = list(text  = paste0("Difference in Perceptions between Sociodemographic Groups<br>",
+                                        "<sup style='font-family:Lato;font-style:italic'>", 
+                                        "Percentage of people who believe the police would be neg. biased ",
+                                        "towards a ", charac, 
+                                        "</sup>"),
+                         font   = list(family = "Lato",
+                                       size   = 17),
+                         x      = 0),
+           legend = list(title  = "",
+                         x      = 0.3,
+                         orientation = "h"),
+           xaxis = list(fixedrange = T), 
+           yaxis = list(fixedrange = T)) %>%
+  config(displayModeBar = F)
 })
 
 ```
@@ -262,3 +287,28 @@ output$discrimination_fig3 <- renderPlot({
 ## Criminal Justice Actors
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+```{r}
+#| panel: input
+#| layout-ncol: 3
+
+selectInput(inputId  = "inputP3a", 
+            label    = h5("Country A:"), 
+            choices  = unique(discrimination.ls[["Overview"]] %>% pull(country)), 
+            selected = "LAC avg")
+selectInput(inputId  = "inputP3b", 
+            label    = h5("Country B:"), 
+            choices  = unique(discrimination.ls[["Overview"]] %>% pull(country)), 
+            selected = "Nicaragua")
+selectInput(inputId  = "inputP3c", 
+            label    = h5("Select a category:"), 
+            choices  = list("Trust"      = "trust", 
+                            "Corruption" = "corruption"), 
+            selected = "trust")
+```
+
+```{r}
+plotOutput("actors_fig1",
+           height = "550px")
+
+```

@@ -20,10 +20,10 @@
 library(haven)
 library(shiny)
 library(ggtext)
+library(plotly)
 library(shinyWidgets)
 library(showtext)
 library(tidyverse)
-
 
 ## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ##
