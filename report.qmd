@@ -29,6 +29,11 @@ discrimination.ls <- list(
   "Disaggregated" = read_csv("Data/discrimination2.csv") 
 )
 
+actors.ls <- list(
+  "Overview"      = read_csv("Data/actors1.csv"),
+  "Disaggregated" = read_csv("Data/actors2.csv") 
+)
+
 ```
 
 Latin America and the Caribbean is known for being the most unequal region in the world. As portrayed by [this report](https://publications.iadb.org/en/the-inequality-crisis-latin-america-and-the-caribbean-at-the-crossroads) published by the Inter-American Development Bank, the region is characterized by a very high inequality in the income distribution and a fractured social contract. In the previous years, there has been a debate around how much does the high inequality in social and economic grounds that prevails in the region influence democratic and institutional aspects in the region [see @krishna_inequality_2008].
@@ -288,27 +293,359 @@ output$discrimination_fig3 <- renderPlotly({
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+::: panel-tabset
+
+## Trust
+```{r}
+selectInput(inputId  = "inputP3a", 
+            label    = h5("Select an actor:"), 
+            choices  = list("Police"                   = "q1d", 
+                            "Prosecutors"              = "q1e",
+                            "Public Defense Attorneys" = "q1f",
+                            "Judges and Magistrates"   = "q1g"), 
+            selected = "q1d")
+
+checkboxInput("inputP3b", 
+              label = "Show previous waves", 
+              value = F)
+
+plotlyOutput("actors_fig1",
+           height = "550px")
+```
+
+## Perceptions of Corruption
+```{r}
+selectInput(inputId  = "inputP3c", 
+            label    = h5("Select an actor:"), 
+            choices  = list("Police"                   = "q2d", 
+                            "Prosecutors"              = "q2e",
+                            "Public Defense Attorneys" = "q2f",
+                            "Judges and Magistrates"   = "q2g"), 
+            selected = "q2d")
+
+checkboxInput("inputP3d", 
+              label = "Show previous waves", 
+              value = F)
+
+plotlyOutput("actors_fig2",
+           height = "550px")
+```
+:::
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
 ```{r}
 #| panel: input
-#| layout-ncol: 3
-
-selectInput(inputId  = "inputP3a", 
-            label    = h5("Country A:"), 
-            choices  = unique(discrimination.ls[["Overview"]] %>% pull(country)), 
-            selected = "LAC avg")
-selectInput(inputId  = "inputP3b", 
-            label    = h5("Country B:"), 
-            choices  = unique(discrimination.ls[["Overview"]] %>% pull(country)), 
-            selected = "Nicaragua")
-selectInput(inputId  = "inputP3c", 
-            label    = h5("Select a category:"), 
-            choices  = list("Trust"      = "trust", 
-                            "Corruption" = "corruption"), 
-            selected = "trust")
+#| layout-ncol: 2
+selectInput(inputId  = "inputP4a", 
+            label    = h5("Select a country:"), 
+            choices  = unique(actors.ls[["Disaggregated"]] %>% pull(country)), 
+            selected = "Barbados")
+selectInput(inputId  = "inputP4b", 
+            label    = h5("Disaggregate results by:"), 
+            choices  = list("Income"      = "inancia", 
+                            "Gender"      = "ale",
+                            "Skin Color"  = "kin"), 
+            selected = "kin")
 ```
 
 ```{r}
-plotOutput("actors_fig1",
+plotlyOutput("actors_fig3",
            height = "550px")
-
 ```
+
+
+```{r}
+#| context: server
+
+## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+##
+#                SERVER - CRIMINAL JUSTICE ACTORS                                                        ----
+##
+## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+output$actors_fig1 <- renderPlotly({
+  
+  if (input$inputP3b == T) {
+    yrs <- c("2017-2019", "2021-2022")
+  } else {
+    yrs <- c("2021-2022")
+  }
+  
+  if (input$inputP3a == "q1d") {
+    charac <- "police officers"
+  }
+  if (input$inputP3a == "q1e") {
+    charac <- "public prosecutors"
+  }
+  if (input$inputP3a == "q1f") {
+    charac <- "public defense attorneys"
+  }
+  if (input$inputP3a == "q1g") {
+    charac <- "judges and magistrates"
+  }
+  
+  data2plot <- actors.ls[["Overview"]] %>%
+    mutate(
+      secyear = year, 
+      year = case_when(
+        year >= 2021 & year <= 2022 ~ "2021-2022",
+        year >= 2017 & year <= 2019 ~ "2017-2019",
+      )
+    ) %>%
+    filter(year %in% yrs) %>%
+    select(country, year, all_of(input$inputP3a), secyear) %>%
+    rename(value2plot = 3) %>%
+    group_by(country) %>%
+    mutate(maxval  = if_else(year == "2021-2022", 1, NA_real_),
+           maxval  = value2plot*maxval,
+           maxval  = max(maxval, na.rm = T))
+  
+  plot <- ggplot(data = data2plot,
+                 aes(x     = reorder(country, maxval),
+                     y     = value2plot,
+                     color = year,
+                     text  = paste0(country, ": ", secyear, "<br>",
+                                    "Percentage: ", 
+                                    format(round(value2plot, 0), 
+                                           nsmall = 0), 
+                                    "%")))
+  
+  if (input$inputP3b == T) {
+    plot <- plot +
+      geom_segment(aes(xend = reorder(country, maxval),
+                       y    = value2plot,
+                       yend = maxval),
+                   color    = "#F4A261",
+                   alpha    = 0.75,
+                   show.legend = F)
+  }
+  
+  plot <- plot +
+    geom_point(size = 2) +
+    labs(y = "% of Respondents") +
+    scale_color_manual(values = c("2021-2022" = "#264653", 
+                                  "2017-2019" = "#F4A261")) +
+    scale_y_continuous(limits = c(0,100),
+                       breaks = seq(0, 100, 20)) +
+    coord_flip() +
+    WJP_theme() +
+    theme(axis.title.y       = element_blank(),
+          axis.title.x       = element_text(size  = 9),
+          axis.text.x        = element_text(size  = 8),
+          axis.text.y        = element_text(size  = 8,
+                                            hjust = 0),
+          panel.grid.major.y = element_blank(),
+          plot.title         = element_text(size  = 13),
+          legend.text        = element_text(size  = 8), 
+          legend.key         = element_rect(fill  = "white"),
+          legend.position    = "bottom",
+          legend.title       = element_blank())
+  
+  ggplotly(plot, 
+           tooltip = c("text")
+  ) %>%
+    layout(
+      title  = list(text  = paste0("Trust in ", charac, " in Latin America and the Caribbean<br>",
+                                   "<sup style='font-family:Lato;font-style:italic'>", 
+                                   "Percentage of respondents who affirmed to have a lot or some trust in ", charac, 
+                                   ".</sup>"),
+                    font   = list(family = "Lato",
+                                  size   = 17),
+                    x      = 0),
+      legend = list(title  = "",
+                    x      = 0.3,
+                    orientation = "h"),
+      xaxis  = list(fixedrange = T), 
+      yaxis  = list(fixedrange = T),
+      margin = list(t   = 50,
+                    r   = 50,
+                    b   = 20, 
+                    l   = 50,
+                    pad = 0)
+    ) %>%
+  config(displayModeBar = F)
+})
+
+output$actors_fig2 <- renderPlotly({
+  
+  if (input$inputP3d == T) {
+    yrs <- c("2017-2019", "2021-2022")
+  } else {
+    yrs <- c("2021-2022")
+  }
+  
+  if (input$inputP3c == "q2d") {
+    charac <- "police officers"
+  }
+  if (input$inputP3c == "q2e") {
+    charac <- "public prosecutors"
+  }
+  if (input$inputP3c == "q2f") {
+    charac <- "public defense attorneys"
+  }
+  if (input$inputP3c == "q2g") {
+    charac <- "judges and magistrates"
+  }
+  
+  data2plot <- actors.ls[["Overview"]] %>%
+    mutate(
+      secyear = year, 
+      year = case_when(
+        year >= 2021 & year <= 2022 ~ "2021-2022",
+        year >= 2017 & year <= 2019 ~ "2017-2019",
+      )
+    ) %>%
+    filter(year %in% yrs) %>%
+    select(country, year, all_of(input$inputP3c), secyear) %>%
+    rename(value2plot = 3) %>%
+    group_by(country) %>%
+    mutate(maxval  = if_else(year == "2021-2022", 1, NA_real_),
+           maxval  = value2plot*maxval,
+           maxval  = max(maxval, na.rm = T))
+  
+  plot <- ggplot(data = data2plot,
+                 aes(x     = reorder(country, maxval),
+                     y     = value2plot,
+                     color = year,
+                     text  = paste0(country, ": ", secyear, "<br>",
+                                    "Percentage: ", 
+                                    format(round(value2plot, 0), 
+                                           nsmall = 0), 
+                                    "%")))
+  
+  if (input$inputP3d == T) {
+    plot <- plot +
+      geom_segment(aes(xend = reorder(country, maxval),
+                       y    = value2plot,
+                       yend = maxval),
+                   color    = "#F4A261",
+                   alpha    = 0.75,
+                   show.legend = F)
+  }
+  
+  plot <- plot +
+    geom_point(size = 2) +
+    labs(y = "% of Respondents") +
+    scale_color_manual(values = c("2021-2022" = "#264653", 
+                                  "2017-2019" = "#F4A261")) +
+    scale_y_continuous(limits = c(0,100),
+                       breaks = seq(0, 100, 20)) +
+    coord_flip() +
+    WJP_theme() +
+    theme(axis.title.y       = element_blank(),
+          axis.title.x       = element_text(size  = 9),
+          axis.text.x        = element_text(size  = 8),
+          axis.text.y        = element_text(size  = 8,
+                                            hjust = 0),
+          panel.grid.major.y = element_blank(),
+          plot.title         = element_text(size  = 13),
+          legend.text        = element_text(size  = 8), 
+          legend.key         = element_rect(fill  = "white"),
+          legend.position    = "bottom",
+          legend.title       = element_blank())
+  
+  ggplotly(plot, 
+           tooltip = c("text")
+  ) %>%
+    layout(
+      title  = list(text  = paste0("Corruption perceptions of", charac, " in Latin America and the Caribbean<br>",
+                                   "<sup style='font-family:Lato;font-style:italic'>", 
+                                   "Percentage of respondents who believe that all or most ", charac, 
+                                   " are involved in corrupt practices.</sup>"),
+                    font   = list(family = "Lato",
+                                  size   = 17),
+                    x      = 0),
+      legend = list(title  = "",
+                    x      = 0.3,
+                    orientation = "h"),
+      xaxis  = list(fixedrange = T), 
+      yaxis  = list(fixedrange = T),
+      margin = list(t   = 50,
+                    r   = 50,
+                    b   = 20, 
+                    l   = 50,
+                    pad = 0)
+    ) %>%
+  config(displayModeBar = F)
+})
+
+output$actors_fig3 <- renderPlotly({
+  
+  data2plot <- actors.ls[["Disaggregated"]] %>%
+    filter(country == input$inputP4a & str_detect(category, input$inputP4b))
+  
+  vals <- data2plot %>%
+    select(starts_with("mean_")) %>%
+    rename(`Trust:<br>Police`                        = mean_q1d, 
+           `Trust:<br>Prosecutors`                   = mean_q1e,
+           `Trust:<br>Public Defense Attorneys`      = mean_q1f,
+           `Trust:<br>Judges & Magistrates`          = mean_q1g,
+           `Corruption:<br>Police`                   = mean_q2d,
+           `Corruption:<br>Prosecutors`              = mean_q2e,
+           `Corruption:<br>Public Defense Attorneys` = mean_q2f,
+           `Corruption:<br>Judges & Magistrates`     = mean_q2g)
+  
+  plot_ly(
+    type = 'scatterpolar',
+    fill = 'toself'
+  ) %>%
+    add_trace(
+      r         = as.numeric(vals[1,]),
+      theta     = names(vals),
+      name      = (data2plot$category)[1],
+      fillcolor = "#70161E",
+      line      = list(color   = "#70161E"),
+      marker    = list(color   = "#70161E",
+                       opacity = 1),
+      opacity = 0.5
+    ) %>%
+    add_trace(
+      r     = as.numeric(vals[2,]),
+      theta = names(vals),
+      name  = (data2plot$category)[2],
+      fillcolor = "#596F62",
+      line      = list(color   = "#596F62"),
+      marker    = list(color   = "#596F62",
+                       opacity = 1),
+      opacity = 0.5
+    )  %>%
+    layout(
+      title  = list(text  = paste0("Trust and Corruption in Selected Institutions across LAC<br>",
+                                   "<sup style='font-family:Lato;font-style:italic'>", 
+                                   "Percentages disaggregated by sociodemographic group</sup>"),
+                    font   = list(family = "Lato",
+                                  size   = 16),
+                    x      = 0),
+      polar = list(
+        radialaxis = list(
+          visible  = T,
+          range    = c(0,100)
+        ),
+        margin = list(t   = 200,
+                      r   = 40,
+                      b   = 40, 
+                      l   = 40,
+                      pad = 40,
+                      autoexpand = F) ,
+        xaxis  = list(fixedrange = T), 
+        yaxis  = list(fixedrange = T)
+      )
+    )
+  
+})
+```
+
+
+
+
+
+
+
+
+
+
+
+

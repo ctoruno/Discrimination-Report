@@ -277,103 +277,119 @@ background: #264653;
 <section id="criminal-justice-actors" class="level2">
 <h2 class="anchored" data-anchor-id="criminal-justice-actors">Criminal Justice Actors</h2>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<div class="cell panel-input card bg-light p-2 quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell no-overflow-x" style="flex-basis: 33.3%;justify-content: center;">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Trust</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Perceptions of Corruption</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div class="cell-output-display no-overflow-x">
 <div class="form-group shiny-input-container">
 <label class="control-label" id="inputP3a-label" for="inputP3a">
-<h5 class="anchored">Country A:</h5>
+<h5 class="anchored">Select an actor:</h5>
 </label>
 <div>
-<select id="inputP3a"><option value="Antigua and Barbuda">Antigua and Barbuda</option>
-<option value="Argentina">Argentina</option>
-<option value="Bahamas">Bahamas</option>
-<option value="Barbados">Barbados</option>
-<option value="Belize">Belize</option>
-<option value="Bolivia">Bolivia</option>
-<option value="Brazil">Brazil</option>
-<option value="Chile">Chile</option>
-<option value="Colombia">Colombia</option>
-<option value="Costa Rica">Costa Rica</option>
-<option value="Dominica">Dominica</option>
-<option value="Dominican Republic">Dominican Republic</option>
-<option value="Ecuador">Ecuador</option>
-<option value="El Salvador">El Salvador</option>
-<option value="Grenada">Grenada</option>
-<option value="Guatemala">Guatemala</option>
-<option value="Guyana">Guyana</option>
-<option value="Haiti">Haiti</option>
-<option value="Honduras">Honduras</option>
-<option value="Jamaica">Jamaica</option>
-<option value="Mexico">Mexico</option>
-<option value="Nicaragua">Nicaragua</option>
-<option value="Panama">Panama</option>
-<option value="Paraguay">Paraguay</option>
-<option value="Peru">Peru</option>
-<option value="St. Kitts and Nevis">St. Kitts and Nevis</option>
-<option value="St. Lucia">St. Lucia</option>
-<option value="St. Vincent and the Grenadines">St. Vincent and the Grenadines</option>
-<option value="Suriname">Suriname</option>
-<option value="Trinidad and Tobago">Trinidad and Tobago</option>
-<option value="Uruguay">Uruguay</option>
-<option value="Venezuela">Venezuela</option>
-<option value="LAC avg" selected="">LAC avg</option></select>
+<select id="inputP3a"><option value="q1d" selected="">Police</option>
+<option value="q1e">Prosecutors</option>
+<option value="q1f">Public Defense Attorneys</option>
+<option value="q1g">Judges and Magistrates</option></select>
 <script type="application/json" data-for="inputP3a" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
 </div>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell no-overflow-x" style="flex-basis: 33.3%;justify-content: center;">
+<div class="cell-output-display">
 <div class="form-group shiny-input-container">
-<label class="control-label" id="inputP3b-label" for="inputP3b">
-<h5 class="anchored">Country B:</h5>
+<div class="checkbox">
+<label>
+<input id="inputP3b" type="checkbox">
+<span>Show previous waves</span>
+</label>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="actors_fig1" style="width:100%; height:550px; " class="plotly html-widget html-widget-output shiny-report-size shiny-report-theme"></div>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="cell-output-display no-overflow-x">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="inputP3c-label" for="inputP3c">
+<h5 class="anchored">Select an actor:</h5>
 </label>
 <div>
-<select id="inputP3b"><option value="Antigua and Barbuda">Antigua and Barbuda</option>
+<select id="inputP3c"><option value="q2d" selected="">Police</option>
+<option value="q2e">Prosecutors</option>
+<option value="q2f">Public Defense Attorneys</option>
+<option value="q2g">Judges and Magistrates</option></select>
+<script type="application/json" data-for="inputP3c" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="form-group shiny-input-container">
+<div class="checkbox">
+<label>
+<input id="inputP3d" type="checkbox">
+<span>Show previous waves</span>
+</label>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="actors_fig2" style="width:100%; height:550px; " class="plotly html-widget html-widget-output shiny-report-size shiny-report-theme"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<div class="cell panel-input card bg-light p-2 quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell no-overflow-x" style="flex-basis: 50.0%;justify-content: center;">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="inputP4a-label" for="inputP4a">
+<h5 class="anchored">Select a country:</h5>
+</label>
+<div>
+<select id="inputP4a"><option value="Antigua and Barbuda">Antigua and Barbuda</option>
 <option value="Argentina">Argentina</option>
 <option value="Bahamas">Bahamas</option>
-<option value="Barbados">Barbados</option>
-<option value="Belize">Belize</option>
+<option value="Barbados" selected="">Barbados</option>
 <option value="Bolivia">Bolivia</option>
 <option value="Brazil">Brazil</option>
-<option value="Chile">Chile</option>
 <option value="Colombia">Colombia</option>
 <option value="Costa Rica">Costa Rica</option>
 <option value="Dominica">Dominica</option>
 <option value="Dominican Republic">Dominican Republic</option>
 <option value="Ecuador">Ecuador</option>
-<option value="El Salvador">El Salvador</option>
 <option value="Grenada">Grenada</option>
-<option value="Guatemala">Guatemala</option>
 <option value="Guyana">Guyana</option>
 <option value="Haiti">Haiti</option>
-<option value="Honduras">Honduras</option>
 <option value="Jamaica">Jamaica</option>
-<option value="Mexico">Mexico</option>
-<option value="Nicaragua" selected="">Nicaragua</option>
-<option value="Panama">Panama</option>
-<option value="Paraguay">Paraguay</option>
 <option value="Peru">Peru</option>
 <option value="St. Kitts and Nevis">St. Kitts and Nevis</option>
 <option value="St. Lucia">St. Lucia</option>
 <option value="St. Vincent and the Grenadines">St. Vincent and the Grenadines</option>
 <option value="Suriname">Suriname</option>
 <option value="Trinidad and Tobago">Trinidad and Tobago</option>
-<option value="Uruguay">Uruguay</option>
-<option value="Venezuela">Venezuela</option>
-<option value="LAC avg">LAC avg</option></select>
-<script type="application/json" data-for="inputP3b" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
+<option value="Venezuela">Venezuela</option></select>
+<script type="application/json" data-for="inputP4a" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
 </div>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell no-overflow-x" style="flex-basis: 33.3%;justify-content: center;">
+<div class="cell-output-display quarto-layout-cell no-overflow-x" style="flex-basis: 50.0%;justify-content: center;">
 <div class="form-group shiny-input-container">
-<label class="control-label" id="inputP3c-label" for="inputP3c">
-<h5 class="anchored">Select a category:</h5>
+<label class="control-label" id="inputP4b-label" for="inputP4b">
+<h5 class="anchored">Disaggregate results by:</h5>
 </label>
 <div>
-<select id="inputP3c"><option value="trust" selected="">Trust</option>
-<option value="corruption">Corruption</option></select>
-<script type="application/json" data-for="inputP3c" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
+<select id="inputP4b"><option value="inancia">Income</option>
+<option value="ale">Gender</option>
+<option value="kin" selected="">Skin Color</option></select>
+<script type="application/json" data-for="inputP4b" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
 </div>
 </div>
 </div>
@@ -381,8 +397,11 @@ background: #264653;
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="actors_fig1" class="shiny-plot-output" style="width:100%;height:550px;"></div>
+<div id="actors_fig3" style="width:100%; height:550px; " class="plotly html-widget html-widget-output shiny-report-size shiny-report-theme"></div>
 </div>
+</div>
+<div class="cell" data-context="server">
+
 </div>
 <p>
 <script type="application/shiny-prerendered" data-context="server-start">
@@ -394,6 +413,11 @@ source("R/settings.R")
 discrimination.ls <- list(
   "Overview"      = read_csv("Data/discrimination1.csv"),
   "Disaggregated" = read_csv("Data/discrimination2.csv") 
+)
+
+actors.ls <- list(
+  "Overview"      = read_csv("Data/actors1.csv"),
+  "Disaggregated" = read_csv("Data/actors2.csv") 
 )
 
 </script>
@@ -578,6 +602,285 @@ output$discrimination_fig3 <- renderPlotly({
 
 </script>
  
+<script type="application/shiny-prerendered" data-context="server">
+## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+##
+#                SERVER - CRIMINAL JUSTICE ACTORS                                                        ----
+##
+## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+output$actors_fig1 <- renderPlotly({
+  
+  if (input$inputP3b == T) {
+    yrs <- c("2017-2019", "2021-2022")
+  } else {
+    yrs <- c("2021-2022")
+  }
+  
+  if (input$inputP3a == "q1d") {
+    charac <- "police officers"
+  }
+  if (input$inputP3a == "q1e") {
+    charac <- "public prosecutors"
+  }
+  if (input$inputP3a == "q1f") {
+    charac <- "public defense attorneys"
+  }
+  if (input$inputP3a == "q1g") {
+    charac <- "judges and magistrates"
+  }
+  
+  data2plot <- actors.ls[["Overview"]] %>%
+    mutate(
+      secyear = year, 
+      year = case_when(
+        year >= 2021 & year <= 2022 ~ "2021-2022",
+        year >= 2017 & year <= 2019 ~ "2017-2019",
+      )
+    ) %>%
+    filter(year %in% yrs) %>%
+    select(country, year, all_of(input$inputP3a), secyear) %>%
+    rename(value2plot = 3) %>%
+    group_by(country) %>%
+    mutate(maxval  = if_else(year == "2021-2022", 1, NA_real_),
+           maxval  = value2plot*maxval,
+           maxval  = max(maxval, na.rm = T))
+  
+  plot <- ggplot(data = data2plot,
+                 aes(x     = reorder(country, maxval),
+                     y     = value2plot,
+                     color = year,
+                     text  = paste0(country, ": ", secyear, "<br>",
+                                    "Percentage: ", 
+                                    format(round(value2plot, 0), 
+                                           nsmall = 0), 
+                                    "%")))
+  
+  if (input$inputP3b == T) {
+    plot <- plot +
+      geom_segment(aes(xend = reorder(country, maxval),
+                       y    = value2plot,
+                       yend = maxval),
+                   color    = "#F4A261",
+                   alpha    = 0.75,
+                   show.legend = F)
+  }
+  
+  plot <- plot +
+    geom_point(size = 2) +
+    labs(y = "% of Respondents") +
+    scale_color_manual(values = c("2021-2022" = "#264653", 
+                                  "2017-2019" = "#F4A261")) +
+    scale_y_continuous(limits = c(0,100),
+                       breaks = seq(0, 100, 20)) +
+    coord_flip() +
+    WJP_theme() +
+    theme(axis.title.y       = element_blank(),
+          axis.title.x       = element_text(size  = 9),
+          axis.text.x        = element_text(size  = 8),
+          axis.text.y        = element_text(size  = 8,
+                                            hjust = 0),
+          panel.grid.major.y = element_blank(),
+          plot.title         = element_text(size  = 13),
+          legend.text        = element_text(size  = 8), 
+          legend.key         = element_rect(fill  = "white"),
+          legend.position    = "bottom",
+          legend.title       = element_blank())
+  
+  ggplotly(plot, 
+           tooltip = c("text")
+  ) %>%
+    layout(
+      title  = list(text  = paste0("Trust in ", charac, " in Latin America and the Caribbean<br>",
+                                   "<sup style='font-family:Lato;font-style:italic'>", 
+                                   "Percentage of respondents who affirmed to have a lot or some trust in ", charac, 
+                                   ".<\u002fsup>"),
+                    font   = list(family = "Lato",
+                                  size   = 17),
+                    x      = 0),
+      legend = list(title  = "",
+                    x      = 0.3,
+                    orientation = "h"),
+      xaxis  = list(fixedrange = T), 
+      yaxis  = list(fixedrange = T),
+      margin = list(t   = 50,
+                    r   = 50,
+                    b   = 20, 
+                    l   = 50,
+                    pad = 0)
+    ) %>%
+  config(displayModeBar = F)
+})
+
+output$actors_fig2 <- renderPlotly({
+  
+  if (input$inputP3d == T) {
+    yrs <- c("2017-2019", "2021-2022")
+  } else {
+    yrs <- c("2021-2022")
+  }
+  
+  if (input$inputP3c == "q2d") {
+    charac <- "police officers"
+  }
+  if (input$inputP3c == "q2e") {
+    charac <- "public prosecutors"
+  }
+  if (input$inputP3c == "q2f") {
+    charac <- "public defense attorneys"
+  }
+  if (input$inputP3c == "q2g") {
+    charac <- "judges and magistrates"
+  }
+  
+  data2plot <- actors.ls[["Overview"]] %>%
+    mutate(
+      secyear = year, 
+      year = case_when(
+        year >= 2021 & year <= 2022 ~ "2021-2022",
+        year >= 2017 & year <= 2019 ~ "2017-2019",
+      )
+    ) %>%
+    filter(year %in% yrs) %>%
+    select(country, year, all_of(input$inputP3c), secyear) %>%
+    rename(value2plot = 3) %>%
+    group_by(country) %>%
+    mutate(maxval  = if_else(year == "2021-2022", 1, NA_real_),
+           maxval  = value2plot*maxval,
+           maxval  = max(maxval, na.rm = T))
+  
+  plot <- ggplot(data = data2plot,
+                 aes(x     = reorder(country, maxval),
+                     y     = value2plot,
+                     color = year,
+                     text  = paste0(country, ": ", secyear, "<br>",
+                                    "Percentage: ", 
+                                    format(round(value2plot, 0), 
+                                           nsmall = 0), 
+                                    "%")))
+  
+  if (input$inputP3d == T) {
+    plot <- plot +
+      geom_segment(aes(xend = reorder(country, maxval),
+                       y    = value2plot,
+                       yend = maxval),
+                   color    = "#F4A261",
+                   alpha    = 0.75,
+                   show.legend = F)
+  }
+  
+  plot <- plot +
+    geom_point(size = 2) +
+    labs(y = "% of Respondents") +
+    scale_color_manual(values = c("2021-2022" = "#264653", 
+                                  "2017-2019" = "#F4A261")) +
+    scale_y_continuous(limits = c(0,100),
+                       breaks = seq(0, 100, 20)) +
+    coord_flip() +
+    WJP_theme() +
+    theme(axis.title.y       = element_blank(),
+          axis.title.x       = element_text(size  = 9),
+          axis.text.x        = element_text(size  = 8),
+          axis.text.y        = element_text(size  = 8,
+                                            hjust = 0),
+          panel.grid.major.y = element_blank(),
+          plot.title         = element_text(size  = 13),
+          legend.text        = element_text(size  = 8), 
+          legend.key         = element_rect(fill  = "white"),
+          legend.position    = "bottom",
+          legend.title       = element_blank())
+  
+  ggplotly(plot, 
+           tooltip = c("text")
+  ) %>%
+    layout(
+      title  = list(text  = paste0("Corruption perceptions of", charac, " in Latin America and the Caribbean<br>",
+                                   "<sup style='font-family:Lato;font-style:italic'>", 
+                                   "Percentage of respondents who believe that all or most ", charac, 
+                                   " are involved in corrupt practices.<\u002fsup>"),
+                    font   = list(family = "Lato",
+                                  size   = 17),
+                    x      = 0),
+      legend = list(title  = "",
+                    x      = 0.3,
+                    orientation = "h"),
+      xaxis  = list(fixedrange = T), 
+      yaxis  = list(fixedrange = T),
+      margin = list(t   = 50,
+                    r   = 50,
+                    b   = 20, 
+                    l   = 50,
+                    pad = 0)
+    ) %>%
+  config(displayModeBar = F)
+})
+
+output$actors_fig3 <- renderPlotly({
+  
+  data2plot <- actors.ls[["Disaggregated"]] %>%
+    filter(country == input$inputP4a & str_detect(category, input$inputP4b))
+  
+  vals <- data2plot %>%
+    select(starts_with("mean_")) %>%
+    rename(`Trust:<br>Police`                        = mean_q1d, 
+           `Trust:<br>Prosecutors`                   = mean_q1e,
+           `Trust:<br>Public Defense Attorneys`      = mean_q1f,
+           `Trust:<br>Judges & Magistrates`          = mean_q1g,
+           `Corruption:<br>Police`                   = mean_q2d,
+           `Corruption:<br>Prosecutors`              = mean_q2e,
+           `Corruption:<br>Public Defense Attorneys` = mean_q2f,
+           `Corruption:<br>Judges & Magistrates`     = mean_q2g)
+  
+  plot_ly(
+    type = 'scatterpolar',
+    fill = 'toself'
+  ) %>%
+    add_trace(
+      r         = as.numeric(vals[1,]),
+      theta     = names(vals),
+      name      = (data2plot$category)[1],
+      fillcolor = "#70161E",
+      line      = list(color   = "#70161E"),
+      marker    = list(color   = "#70161E",
+                       opacity = 1),
+      opacity = 0.5
+    ) %>%
+    add_trace(
+      r     = as.numeric(vals[2,]),
+      theta = names(vals),
+      name  = (data2plot$category)[2],
+      fillcolor = "#596F62",
+      line      = list(color   = "#596F62"),
+      marker    = list(color   = "#596F62",
+                       opacity = 1),
+      opacity = 0.5
+    )  %>%
+    layout(
+      title  = list(text  = paste0("Trust and Corruption in Selected Institutions across LAC<br>",
+                                   "<sup style='font-family:Lato;font-style:italic'>", 
+                                   "Percentages disaggregated by sociodemographic group<\u002fsup>"),
+                    font   = list(family = "Lato",
+                                  size   = 16),
+                    x      = 0),
+      polar = list(
+        radialaxis = list(
+          visible  = T,
+          range    = c(0,100)
+        ),
+        margin = list(t   = 200,
+                      r   = 40,
+                      b   = 40, 
+                      l   = 40,
+                      pad = 40,
+                      autoexpand = F) ,
+        xaxis  = list(fixedrange = T), 
+        yaxis  = list(fixedrange = T)
+      )
+    )
+  
+})
+</script>
+ 
 <script type="application/shiny-prerendered" data-context="server-extras">
 ojs_define <- function(..., .session = shiny::getDefaultReactiveDomain()) {
   quos <- rlang::enquos(...)
@@ -607,7 +910,7 @@ ojs_define <- function(..., .session = shiny::getDefaultReactiveDomain()) {
 </p>
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="dependencies">
-{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.5.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.5.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["plotly-binding"]},{"type":"character","attributes":{},"value":["4.10.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.10.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]}]}
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.5.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.5.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["plotly-binding"]},{"type":"character","attributes":{},"value":["4.10.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.10.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.5.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.5.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["plotly-binding"]},{"type":"character","attributes":{},"value":["4.10.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.10.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.5.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.5.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["plotly-binding"]},{"type":"character","attributes":{},"value":["4.10.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.10.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.12.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.7.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.5.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.5.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["plotly-binding"]},{"type":"character","attributes":{},"value":["4.10.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.10.0"]}]}]}
 </script>
 <!--/html_preserve-->
 <!--html_preserve-->

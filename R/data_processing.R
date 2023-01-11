@@ -41,24 +41,31 @@ master_data.df <- read_dta(paste0(path2SP,
 ##
 ## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-discrimination1.df <- master_data.df %>%
+discrimination1_prev.df <- master_data.df %>%
   select(country, year, 
          q18a, q18b, q18c, q18f, q18e, EXP_q17g, EXP_q17h, EXP_q17j) %>%
-  mutate(across(!country,
-                as.double),
-         across(!country,
-                ~if_else(.x == 99, NA_real_, .x))) %>%
+  mutate(
+    across(!country,
+           as.double),
+    across(!country,
+           ~if_else(.x == 99, NA_real_, .x))
+  )
+
+discrimination1.df <- discrimination1_prev.df %>%
   group_by(country, year) %>%
   summarise(across(everything(),
                    mean,
                    na.rm = T)) %>%
+  bind_rows(
+    discrimination1_prev.df %>%
+      mutate(country = "LAC avg") %>%
+      group_by(country, year) %>%
+      summarise(across(everything(),
+                       mean,
+                       na.rm = T))
+  ) %>%
   mutate(across(!year,
-                ~.x*100)) %>%
-  group_by(year) %>%
-  bind_rows(summarise(., across(where(is.numeric), 
-                                mean,
-                                na.rm = T),
-                      across(where(is.character), ~'LAC avg')))
+                ~.x*100))
   
 discrimination2.df <- master_data.df %>%
   filter(year == 2022) %>%
@@ -135,4 +142,128 @@ write_csv(discrimination2.df, "Data/discrimination2.csv")
 #                2.  Criminal Justice Actors Data                                                        ----
 ##
 ## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+actors1_prev.df <- master_data.df %>%
+  select(country, year, 
+         q1d, q1e, q1f, q1f, q1g, q2d, q2e, q2f, q2g) %>%
+  mutate(
+    across(!country,
+           as.double),
+    across(starts_with("q1"),
+           ~case_when(
+             .x < 3          ~ 1,
+             .x > 2 & .x < 5 ~ 0,
+             .x > 5          ~ NA_real_
+           )),
+    across(starts_with("q2"),
+           ~case_when(
+             .x < 3          ~ 0,
+             .x > 2 & .x < 5 ~ 1,
+             .x > 5          ~ NA_real_
+           ))
+  )
+
+actors1.df <- actors1_prev.df %>%
+  group_by(country, year) %>%
+  summarise(across(everything(),
+                   mean,
+                   na.rm = T)) %>%
+  bind_rows(
+    actors1_prev.df %>%
+      mutate(country = "LAC avg") %>%
+      group_by(country, year) %>%
+      summarise(across(everything(),
+                       mean,
+                       na.rm = T))
+  ) %>%
+  mutate(across(!year,
+                ~.x*100))
+
+actors2.df <- master_data.df %>%
+  filter(year == 2022) %>%
+  select(country, 
+         inc_cat    = fin, 
+         gend_cat   = gend, 
+         skin_cat   = COLOR,
+         q1d, q1e, q1f, q1f, q1g, q2d, q2e, q2f, q2g) %>%
+  mutate(
+    inc_cat   = case_when(
+      inc_cat < 3               ~ "Financially Insecured",
+      inc_cat > 2 & inc_cat < 6 ~ "Financially Secured"
+    ),
+    gend_cat  = case_when(
+      gend_cat == 1 ~ "Male",
+      gend_cat == 2 ~ "Female"
+    ),
+    skin_cat = case_when(
+      skin_cat < 7                 ~ "Dark Skin",
+      skin_cat > 6 & skin_cat < 12 ~ "Light Skin"
+    ),
+    across(starts_with("q1"),
+           ~case_when(
+             .x < 3          ~ 1,
+             .x > 2 & .x < 5 ~ 0,
+             .x > 5          ~ NA_real_
+           )),
+    across(starts_with("q2"),
+           ~case_when(
+             .x < 3          ~ 0,
+             .x > 2 & .x < 5 ~ 1,
+             .x > 5          ~ NA_real_
+           ))
+  )
+
+actors2.df <- map_dfr(c("inc", "gend", "skin"),
+                      function(targetVar){
+                        actors2.df %>%
+                          select(country, 
+                                 starts_with(targetVar),
+                                 starts_with("q")) %>%
+                          rename(category = 2) %>%
+                          group_by(country, category) %>%
+                          summarise(
+                            across(starts_with("q"),
+                                   mean,
+                                   na.rm = T,
+                                   .names = "mean_{col}"),
+                            across(starts_with("q"),
+                                   sd,
+                                   na.rm = T,
+                                   .names = "sd_{col}"),
+                            n = n()
+                          ) %>%
+                          filter(!is.na(category))
+                      }) %>%
+  mutate(across(!c(category, n),
+                ~.x*100))
+
+actors2.df <- actors2.df %>%
+  bind_cols(
+    map_dfc(c("q1d", "q1e", "q1f", "q1g", "q2d", "q2e", "q2f", "q2g"),
+            function(targetVar){
+              tname <- as.name(targetVar)
+              actors2.df %>%
+                ungroup() %>%
+                select(ends_with(targetVar), n) %>%
+                rename(mean = 1,
+                       sd   = 2) %>%
+                mutate(
+                  "upper_{{ tname }}" := mean+(1.960*(sd/(sqrt(n)))),
+                  "lower_{{ tname }}" := mean-(1.960*(sd/(sqrt(n))))
+                ) %>%
+                select(4, 5)
+            })
+  )
+
+
+
+write_csv(actors1.df, "Data/actors1.csv")
+write_csv(actors2.df, "Data/actors2.csv")
+
+
+
+
+
+
+
 
