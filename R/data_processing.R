@@ -24,7 +24,6 @@ if (Sys.info()["user"] == "carlostorunopaniagua") {
 } else if (Sys.info()["user"] == "jaeheelee"){
   path2SP <- paste0("/Users/jaeheelee/Library/CloudStorage/OneDrive-SharedLibraries-WorldJusticeProject/",
                     "Research - Data Analytics/")
-  
 } else if (Sys.info()["user"] == "macbookprosolido") {
   path2SP <- paste0("/Users/macbookprosolido/Documents/WJP/")
 } else{
@@ -260,9 +259,88 @@ actors2.df <- actors2.df %>%
 write_csv(actors1.df, "Data/actors1.csv")
 write_csv(actors2.df, "Data/actors2.csv")
 
+## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+##
+#         3.  Perceptions Criminal Justice System                                                       ----
+##
+## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+yrs <- master_data.df %>%
+  group_by(country) %>%
+  slice_max(order_by = year,
+            n = 2) %>%
+  ungroup() %>%
+  group_by(year, country) %>%
+  summarise() %>%
+  pull(year)
+
+perceptions <- master_data.df %>%
+  select(country, year, 
+         inc_cat    = fin, 
+         gend_cat   = gend, 
+         skin_cat   = COLOR,
+         q48e_G1, q48f_G1, q48g_G1, q49a_G1, q49a_G2, q49b_G1, q49c_G1, EXP_q23d_G1, q49e_G1, EXP_q23f_G1, 
+         q48e_G2, q48f_G2, q48g_G2, q49b_G2, q49c_G2, q49e_G2)  %>%
+  mutate(
+    across(!c(country,inc_cat, gend_cat, skin_cat),
+           as.double),
+    across(!c(country,inc_cat, gend_cat, skin_cat),
+           ~if_else(.x == 99, NA_real_, .x)),
+    across(!c(country, year, inc_cat, gend_cat, skin_cat),
+           ~case_when(
+             .x < 3          ~ 1,
+             .x > 2 & .x < 5 ~ 0,
+             .x > 5          ~ NA_real_
+           ))) %>%
+  select(!starts_with("EXP")) %>%
+  select(!c(starts_with("q49")))
+
+perceptions1 <- perceptions %>%
+  filter(year %in% yrs) %>%
+  select(!c(inc_cat, gend_cat, skin_cat)) %>%
+  group_by(country, year) %>%
+  summarise(across(everything(),
+                   mean,
+                   na.rm = T)) %>%
+  rename(group = year) %>%
+  mutate(group = as.character(group))
+
+perceptions2 <- perceptions %>%
+  filter(year == 2022) %>%
+  mutate(
+    inc_cat   = case_when(
+      inc_cat < 3               ~ "Financially Insecured",
+      inc_cat > 2 & inc_cat < 6 ~ "Financially Secured"
+    ),
+    gend_cat  = case_when(
+      gend_cat == 1 ~ "Male",
+      gend_cat == 2 ~ "Female"
+    ),
+    skin_cat = case_when(
+      skin_cat < 7                 ~ "Dark Skin",
+      skin_cat > 6 & skin_cat < 12 ~ "Light Skin"
+    )) %>%
+  rename(group = country)
+
+perceptions2 <- map_dfr(c("inc", "gend", "skin"),
+                        function(targetVar){
+                          perceptions2 %>%
+                            select(group, 
+                                   starts_with(targetVar),
+                                   starts_with("q")) %>%
+                            rename(category = 2) %>%
+                            group_by(group, category) %>%
+                            summarise(
+                              across(starts_with("q"),
+                                     mean,
+                                     na.rm = T
+                              )) %>%
+                            filter(!is.na(category))
+                        })
 
 
-
+write_csv(actors1.df, "Data/perceptions1.csv")
+write_csv(actors2.df, "Data/perceptions2.csv")
 
 
 
