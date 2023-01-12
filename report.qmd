@@ -34,6 +34,11 @@ actors.ls <- list(
   "Disaggregated" = read_csv("Data/actors2.csv") 
 )
 
+perceptions.ls <- list(
+  "Overview"      = read_csv("Data/perceptions1.csv"),
+  "Disaggregated" = read_csv("Data/perceptions2.csv") 
+)
+
 ```
 
 Latin America and the Caribbean is known for being the most unequal region in the world. As portrayed by [this report](https://publications.iadb.org/en/the-inequality-crisis-latin-america-and-the-caribbean-at-the-crossroads) published by the Inter-American Development Bank, the region is characterized by a very high inequality in the income distribution and a fractured social contract. In the previous years, there has been a debate around how much does the high inequality in social and economic grounds that prevails in the region influence democratic and institutional aspects in the region [see @krishna_inequality_2008].
@@ -638,14 +643,312 @@ output$actors_fig3 <- renderPlotly({
 })
 ```
 
+## Perceptions Criminal Justice System    
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+::: panel-tabset
+
+## Year Comparisson
+
+```{r}
+selectInput(inputId  = "inputP5a", 
+            label    = h5("Select a country:"), 
+            choices  = unique(actors.ls[["Overview"]] %>% pull(country)), 
+            selected = "Colombia")
+
+plotOutput("perceptions_fig1",
+           height = "550px")
+```
+
+## Perceptions of Corruption
+
+```{r}
+#| panel: input
+#| layout-ncol: 2
+selectInput(inputId  = "inputP5b", 
+            label    = h5("Select a country:"), 
+            choices  = unique(actors.ls[["Disaggregated"]] %>% pull(country)), 
+            selected = "Barbados")
+selectInput(inputId  = "inputP5c", 
+            label    = h5("Disaggregate results by:"), 
+            choices  = list("Income"      = "inancia", 
+                            "Gender"      = "ale",
+                            "Skin Color"  = "kin"), 
+            selected = "kin")
+
+```
+
+```{r}
+plotOutput("perceptions_fig2",
+           height = "550px")
+```
+
+:::
+
+```{r}
+#| context: server
+
+## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+##
+#                SERVER - Perceptions Criminal Justice System                                                        ----
+##
+## ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
+output$perceptions_fig1 <- renderPlot({
+  
+  yrs <- perceptions.ls[["Overview"]] %>%
+  filter(country %in% input$inputP5a) %>%
+  slice_max(order_by = group, n = 2) %>%
+  pull(group)
+  
+  data2plot <- perceptions.ls[["Overview"]] %>%
+    filter(country %in% input$inputP5a)
+  data2plot <- data2plot[,2:8]
+  
+  # Definig labels - Part I: Percentages
+  vals <- data2plot %>% 
+    filter(group == yrs[1]) %>%
+    pivot_longer(!group,
+                 values_to = "values",
+                 names_to  = "vars") %>%
+    pull(values)
+
+  vals <- paste0(round(vals*100,0), "%")
+  names(vals) <- names(data2plot %>% select(!group))
+  
+  # Defining color palette
+  colors4plot <- c("#264653", "#F4A261")
+  names(colors4plot) <- yrs
+  
+  applying_labels.fn <- function(text = text, color_code, value_vectors){
+  case_when(
+    text == 'q48e_G1' ~ paste("<span style='color:", color_code, ";font-size:6.326276mm;font-weight:bold'>",  
+                           value_vectors["q48e_G1"],
+                           "</span>",
+                           "<br>",
+                           "<span style='color:#524F4C;font-size:3.514598mm;font-weight:bold'>",
+                           "The courts **guarantee** everyone<br> a fair trial",
+                           "</span>"),
+    text == 'q48f_G1' ~ paste("<span style='color:", color_code, ";font-size:6.326276mm;font-weight:bold'>",  
+                              value_vectors["q48f_G1"],
+                              "</span>",
+                              "<br>",
+                              "<span style='color:#524F4C;font-size:3.514598mm'>",
+                              "The courts are more concerned <br> about *procedures* than they <br> are with providing justice",
+                              "</span>"),
+    text == 'q48g_G1' ~ paste("<span style='color:", color_code, ";font-size:6.326276mm;font-weight:bold'>",  
+                              value_vectors["q48g_G1"],
+                              "</span>",
+                              "<br>",
+                              "<span style='color:#524F4C;font-size:3.514598mm'>",
+                              "The courts decides according <br>to the *interes* of those <br>innocence who have more money",
+                              "</span>"),
+    text == 'q48e_G2' ~ paste("<span style='color:", color_code, ";font-size:6.326276mm;font-weight:bold'>",  
+                              value_vectors["q48e_G2"],
+                              "</span>",
+                              "<br>",
+                              "<span style='color:#524F4C;font-size:3.514598mm'>",
+                              "Police investigators **investigate crimes <br> in an independent manner**",
+                              "</span>"),
+    text == 'q48f_G2' ~ paste("<span style='color:", color_code, ";font-size:6.326276mm;font-weight:bold'>",  
+                              value_vectors["q48f_G2"],
+                              "</span>",
+                              "<br>",
+                              "<span style='color:#524F4C;font-size:3.514598mm'>",
+                              "Prosecutors **prosecute crimes <br> in an independent manner**",
+                              "</span>"),
+    text == 'q48g_G2' ~ paste("<span style='color:", color_code, ";font-size:6.326276mm;font-weight:bold'>",  
+                                    value_vectors["q48g_G2"],
+                                    "</span>",
+                                    "<br>",
+                                    "<span style='color:#524F4C;font-size:3.514598mm'>",
+                                    "Judges **decides cases <br> in an independent manner**",
+                                    "</span>")
+  )
+  }
+  
+  base_figure <- ggradar2::ggradar2(
+  data2plot,
+  radarshape  = "sharp",
+  fullscore   = rep(1, 6),
+  polygonfill = F,
+  background.circle.colour = "white",
+  gridline.mid.colour      = "grey",
+  gridline.min.linetype    = "solid",
+  gridline.mid.linetype    = "solid",
+  gridline.max.linetype    = "solid",
+  grid.label.size = 3.514598,
+  
+  # The following part is IMPORTANT. We define the labels using a markdown syntax. However, given that
+  # ggradar2 uses geom_text(), markdown language is not supported and all the italics or bold fonts. 
+  # will not be reflected. Therefore, we set labels with color == "white" so they are not visible  
+  # However, ggradar estimates the optimal X and Y coordinates of these labels and saves them as plot data.
+  # We gonna use these coordinates to plot these labels again but using ggtext::geom_richtext which
+  # supports markdown syntax in the labels.
+  
+  axis.labels.color = "white",
+  axis.label.size  = 1,
+  group.colours    = colors4plot,
+  group.line.width = 0.75
+)
+
+# Transforming labels using an externally predefined function
+base_figure$data <- base_figure$data %>%
+  mutate(across(text,
+                applying_labels.fn ,
+                color_code    = colors4plot[1],
+                value_vectors = vals))
+
+# Adding additional aesthetics to radar chart using the "traditional" tools from ggplot2
+radar <- base_figure +
+  ggtext::geom_richtext(data  = base_figure$data,
+                        # For the aesthetics, we bring the X and Y coordinates saved by ggradar2 with
+                        # a minor adjustment depending on the final position of the label.
+                        aes(x     = x*c(1.0, 1.2, 1.17, 1.12, 1.0, 1.1), 
+                            y     = y*c(1.1, 1.2, 1.10, 1.12, 1.1, 1.1), 
+                            label = text),
+                        #family      = "Lato Full",
+                        fontface    = "plain",
+                        hjust       = 0.5, 
+                        size        = 3.514598,
+                        text.colour = "#524F4C", 
+                        fill        = NA, 
+                        label.color = NA) +
+  scale_y_continuous(expand = expansion(mult = 0.065)) +
+  theme(legend.position = "top");radar
+
+})
 
 
+output$perceptions_fig2 <- renderPlot({
+  
+  data2plot <- perceptions.ls[["Disaggregated"]] %>%
+    filter(group %in% input$inputP5b) %>%
+    filter(str_detect(category, input$inputP5c))
+  
+  yrs <- data2plot %>%
+    pull(category) %>%
+    unique()
+  
+  data2plot <- data2plot[,2:8] %>%
+    rename(group = category)
+  
+  # Definig labels - Part I: Percentages
+  
+  vals <- data2plot %>% 
+    filter(group == yrs[1]) %>%
+    pivot_longer(!group,
+               values_to = "values",
+               names_to  = "vars") %>%
+    pull(values)
+  
+  vals <- paste0(round(vals*100,0), "%")
+  names(vals) <- names(data2plot %>% select(!group))
 
+  # Defining color palette
+  colors4plot <- c("#264653", "#F4A261")
+  names(colors4plot) <- yrs
+  
+  applying_labels.fn <- function(text = text, color_code, value_vectors){
+  case_when(
+    text == 'q48e_G1' ~ paste("<span style='color:", color_code, ";font-size:6.326276mm;font-weight:bold'>",  
+                           value_vectors["q48e_G1"],
+                           "</span>",
+                           "<br>",
+                           "<span style='color:#524F4C;font-size:3.514598mm;font-weight:bold'>",
+                           "The courts **guarantee** everyone<br> a fair trial",
+                           "</span>"),
+    text == 'q48f_G1' ~ paste("<span style='color:", color_code, ";font-size:6.326276mm;font-weight:bold'>",  
+                              value_vectors["q48f_G1"],
+                              "</span>",
+                              "<br>",
+                              "<span style='color:#524F4C;font-size:3.514598mm'>",
+                              "The courts are more concerned <br> about *procedures* than they <br> are with providing justice",
+                              "</span>"),
+    text == 'q48g_G1' ~ paste("<span style='color:", color_code, ";font-size:6.326276mm;font-weight:bold'>",  
+                              value_vectors["q48g_G1"],
+                              "</span>",
+                              "<br>",
+                              "<span style='color:#524F4C;font-size:3.514598mm'>",
+                              "The courts decides according <br>to the *interes* of those <br>innocence who have more money",
+                              "</span>"),
+    text == 'q48e_G2' ~ paste("<span style='color:", color_code, ";font-size:6.326276mm;font-weight:bold'>",  
+                              value_vectors["q48e_G2"],
+                              "</span>",
+                              "<br>",
+                              "<span style='color:#524F4C;font-size:3.514598mm'>",
+                              "Police investigators **investigate crimes <br> in an independent manner**",
+                              "</span>"),
+    text == 'q48f_G2' ~ paste("<span style='color:", color_code, ";font-size:6.326276mm;font-weight:bold'>",  
+                              value_vectors["q48f_G2"],
+                              "</span>",
+                              "<br>",
+                              "<span style='color:#524F4C;font-size:3.514598mm'>",
+                              "Prosecutors **prosecute crimes <br> in an independent manner**",
+                              "</span>"),
+    text == 'q48g_G2' ~ paste("<span style='color:", color_code, ";font-size:6.326276mm;font-weight:bold'>",  
+                                    value_vectors["q48g_G2"],
+                                    "</span>",
+                                    "<br>",
+                                    "<span style='color:#524F4C;font-size:3.514598mm'>",
+                                    "Judges **decides cases <br> in an independent manner**",
+                                    "</span>")
+  )
+  }
+  
+  base_figure <- ggradar2::ggradar2(
+  data2plot,
+  radarshape  = "sharp",
+  fullscore   = rep(1, 6),
+  polygonfill = F,
+  background.circle.colour = "white",
+  gridline.mid.colour      = "grey",
+  gridline.min.linetype    = "solid",
+  gridline.mid.linetype    = "solid",
+  gridline.max.linetype    = "solid",
+  grid.label.size = 3.514598,
+  
+  # The following part is IMPORTANT. We define the labels using a markdown syntax. However, given that
+  # ggradar2 uses geom_text(), markdown language is not supported and all the italics or bold fonts. 
+  # will not be reflected. Therefore, we set labels with color == "white" so they are not visible  
+  # However, ggradar estimates the optimal X and Y coordinates of these labels and saves them as plot data.
+  # We gonna use these coordinates to plot these labels again but using ggtext::geom_richtext which
+  # supports markdown syntax in the labels.
+  
+  axis.labels.color = "white",
+  axis.label.size  = 1,
+  group.colours    = colors4plot,
+  group.line.width = 0.75
+)
 
+# Transforming labels using an externally predefined function
+base_figure$data <- base_figure$data %>%
+  mutate(across(text,
+                applying_labels.fn ,
+                color_code    = colors4plot[1],
+                value_vectors = vals))
 
-
-
-
-
+# Adding additional aesthetics to radar chart using the "traditional" tools from ggplot2
+radar <- base_figure +
+  ggtext::geom_richtext(data  = base_figure$data,
+                        # For the aesthetics, we bring the X and Y coordinates saved by ggradar2 with
+                        # a minor adjustment depending on the final position of the label.
+                        aes(x     = x*c(1.0, 1.2, 1.17, 1.12, 1.0, 1.1), 
+                            y     = y*c(1.1, 1.2, 1.10, 1.12, 1.1, 1.1), 
+                            label = text),
+                        #family      = "Lato Full",
+                        fontface    = "plain",
+                        hjust       = 0.5, 
+                        size        = 3.514598,
+                        text.colour = "#524F4C", 
+                        fill        = NA, 
+                        label.color = NA) +
+  scale_y_continuous(expand = expansion(mult = 0.065)) +
+  theme(legend.position = "top");radar
+  
+})
+```

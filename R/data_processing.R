@@ -339,8 +339,8 @@ perceptions2 <- map_dfr(c("inc", "gend", "skin"),
                         })
 
 
-write_csv(actors1.df, "Data/perceptions1.csv")
-write_csv(actors2.df, "Data/perceptions2.csv")
+write_csv(perceptions1, "Data/perceptions1.csv")
+write_csv(perceptions2, "Data/perceptions2.csv")
 
 
 
